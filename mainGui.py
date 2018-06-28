@@ -10,21 +10,24 @@ def createWidgets(root, ix, app_name):
     button.grid(column=1,row=ix,padx=10,pady=10)
     val = tkinter.StringVar()
     array = tuple(range(int(xdo.get_workspace_count())))
+    id_array = xdo.get_window_id(app_name)
     combo = ttk.Combobox(root, values = array, textvariable=val, state='readonly', width=4)
     combo.grid(column=2,row=ix)
-    combo.bind('<<ComboboxSelected>>', lambda event: changeWorkspace(val.get()))
-    combo.current(getCurrentid(app_name))
+    combo.bind('<<ComboboxSelected>>', lambda event: changeWorkspace(val.get(),id_array))
+    combo.current(getCurrentid(id_array))
     return root
 
-def getCurrentid(app_name):
-    id_array = xdo.get_window_id(app_name)
+def getCurrentid(id_array):
     for id in id_array:
         if xdo.get_workspace_num(id) != -1:
             work_num = xdo.get_workspace_num(id)
     return work_num
 
-def changeWorkspace(val):
-    print(val)
+def changeWorkspace(val, id_array):
+    for id in id_array:
+        if xdo.get_workspace_num(id) != -1:
+            work_num = xdo.set_window_workspace(id, val)
+
 
 def startUpApp():
     print('start')
