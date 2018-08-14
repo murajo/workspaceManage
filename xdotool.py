@@ -11,7 +11,7 @@ def get_window_id(name):
     return res
 
 # 指定したwindowIDのワークスペースを変更
-# return intxdo.get_workspace_num(id))
+# return int
 def set_window_workspace(window_id, work_num):
     try:
         res = subprocess.check_call(["xdotool", "set_desktop_for_window", window_id, work_num])
